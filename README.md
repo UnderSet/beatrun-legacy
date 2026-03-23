@@ -17,17 +17,17 @@ Code is untouched beyond being run through a linter to make it readable.
 > Try [Beatrun Community Edition](https://steamcommunity.com/sharedfiles/filedetails/?id=3467179024) if the newest Beatrun's what you're looking for.
 
 > [!CAUTION]
-> [VManip](https://steamcommunity.com/sharedfiles/filedetails/?id=2155366756) is a **requirement** for this version of Beatrun to work correctly. [^1]
+> [**VManip**](https://steamcommunity.com/sharedfiles/filedetails/?id=2155366756) is a **requirement** for this version of Beatrun to work correctly. [^1] A version is [included in this repository](/vmaniprework/) that is known to work with this version of Beatrun.
 >
 > **Do not** have Beatrun Community Edition enabled with this addon also installed. You *will* run into issues. This will be fixed at some point...probably.
 
 ### How-
 
-x64dbg and a little bit of patience.
+[**x64dbg**](https://github.com/x64dbg/x64dbg) and a little bit of patience.
 
 ### Credits
 - **JonnyBro** and **relaxtakenotes** for Beatrun Community Edition (which inspired this whole thing) and `lual_loadbuffer` method (`lual_loadbufferx` in my case), which made all this possible
-- [**x86dbg**](https://github.com/x64dbg/x64dbg), which I used to make this
+- [**x64dbg**](https://github.com/x64dbg/x64dbg), which I used to make this
 - **datae** for creating Beatrun
 - [x14y24HeadsUpDaisy font](https://hicchicc.github.io/00ff/)
 - [Datto D-DIN font](https://github.com/amcchord/datto-d-din)
