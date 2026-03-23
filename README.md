@@ -5,7 +5,7 @@
 
 Older version of infamous parkour gamemode Beatrun for Garry's Mod, now with source code extracted.
 
-Build DLLs dated August 6th, 2022, 9:03 AM.
+Build DLLs extracted dated August 6th, 2022, 9:03 AM. Beatrun content is `v1.01` with assets ([`content` folder](/gamemodes/beatrun/content/)) from `v1.Seal`, using files from Kodelash's release.
 
 Code is untouched beyond being run through a linter to make it readable.
 
