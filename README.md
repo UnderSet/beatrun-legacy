@@ -1,4 +1,4 @@
-> [!NOTE] Notice
+> [!NOTE]
 > README in construction.
 
 
@@ -32,4 +32,4 @@ x64dbg and a little bit of patience.
 - **datae** for creating Beatrun
 - [x14y24HeadsUpDaisy font](https://hicchicc.github.io/00ff/)
 
-[^1] Another version might be required...
+[^1]: Another version might be required...
