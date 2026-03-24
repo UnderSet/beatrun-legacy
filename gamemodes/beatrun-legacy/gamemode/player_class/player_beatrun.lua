@@ -101,13 +101,13 @@ function PLAYER:Loadout()
 	self.Player:SelectWeapon("runnerhands")
 	self.Player:SetJumpPower(225)
 	self.Player:SetCrouchedWalkSpeed( 0.5 )
-	self.Player:SetFOV(self.Player:GetInfoNum("Beatrun_FOV", 120))
+	self.Player:SetFOV(self.Player:GetInfoNum("fov_desired", 120))
 	self.Player:SetCanZoom(false)
 
 end
 
 hook.Add("PlayerSwitchWeapon", "ResetFOV", function(ply)
-	ply:SetFOV(ply:GetInfoNum("Beatrun_FOV", 120))
+	ply:SetFOV(ply:GetInfoNum("fov_desired", 120))
 end)
 
 function PLAYER:SetModel()
@@ -290,7 +290,7 @@ hook.Add("PlayerSpawn", "ResetStateTransition", function(ply, transition)
 		if transition and IsValid(ply) then
 			ply:ResetParkourTimes()
 			ply:SetJumpPower(225)
-			ply:SetFOV(ply:GetInfoNum("Beatrun_FOV", 110))
+			ply:SetFOV(ply:GetInfoNum("fov_desired", 110))
 			ply:SetCanZoom(false)
 			ply.ClimbingTrace = nil
 		end

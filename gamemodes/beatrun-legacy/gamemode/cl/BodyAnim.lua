@@ -49,6 +49,9 @@ local smoothend = false
 local endlerp = 0
 local view = {}
 local justremoved = false
+
+local calcviewrunning = false
+
 function RemoveBodyAnim(noang)
     local ply = LocalPlayer()
     local ang = ply:EyeAngles()
@@ -353,7 +356,19 @@ function BodyAnimCalcView2(ply, pos, angles, fov)
             if not ply:ShouldDrawLocalPlayer() then
                 ply:SetNoDraw(false)
                 view.angles = view.angles + ply:GetViewPunchAngles()
-                return view
+
+                calcviewrunning = true
+                local view = hook.Run("CalcView", ply, pos, angles, fov, ...)
+                calcviewrunning = false
+                if !view then 
+                    fov = math.Remap(fov, 0, GetConVar("fov_desired"):GetInt(), 0, GetConVar("beatrun_fov"):GetInt())
+                    return
+                else
+                    view.fov = math.Remap(view.fov, 0, GetConVar("fov_desired"):GetInt(), 0, GetConVar("beatrun_fov"):GetInt())
+                    return view
+                end
+
+                -- return view
             else
                 ply:SetNoDraw(true)
             end

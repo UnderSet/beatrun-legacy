@@ -364,7 +364,7 @@ function SWEP:PrimaryAttack()
 		local fovmult = (mult == 1 and 1) or 1.1
 		ply:SetMEMoveLimit(ply:GetMEMoveLimit()*0.75)
 		ply:SetOverdriveMult(mult)
-		ply:SetFOV(ply:GetInfoNum("Beatrun_FOV", 120)*fovmult, 0.125)
+		ply:SetFOV(ply:GetInfoNum("fov_desired", 120)*fovmult, 0.125)
 		return
 	end
 	
