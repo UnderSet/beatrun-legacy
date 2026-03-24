@@ -1,7 +1,7 @@
 "beatrun"
 {
 	"base"		"base"
-	"title"		"Beatrun"
+	"title"		"Beatrun (Legacy)"
 	"maps"		"^br_"
 	"menusystem"	"1"
 

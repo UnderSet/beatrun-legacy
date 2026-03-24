@@ -3,13 +3,13 @@
 
 # Beatrun (Legacy)
 
-Older version of infamous parkour gamemode Beatrun for Garry's Mod, now with source code extracted.
+Older version of infamous parkour gamemode Beatrun for Garry's Mod, now with extracted source code and modifications/improvements (?).
 
-This is a dump of v1.01 [^1]. Last modified October 14th 2022 (content 1:53 PM, binaries 2:20 PM *(client)* / 2:22 PM *(server)*)
+This is based off of a dump of v1.01 [^1]. Last modified October 14th 2022 (content 1:53 PM, binaries 2:20 PM *(client)* / 2:22 PM *(server)*)
 
-See the `kitbashed` branch if the version originally uploaded to this repository is what you're looking for.
+See the [`kitbashed`](https://github.com/UnderSet/beatrun-legacy/tree/kitbashed) branch if the version originally uploaded to this repository is what you're looking for.
 
-Code is untouched beyond being run through a linter to make it readable, and will not be modified further on this branch.
+If you're looking for what this is based off of, it's on the [`1.0.1`](https://github.com/UnderSet/beatrun-legacy/tree/1.0.1) branch.
 
 > [!IMPORTANT]
 > You *really* shouldn't play this version.
@@ -21,7 +21,7 @@ Code is untouched beyond being run through a linter to make it readable, and wil
 > [!CAUTION]
 > [**VManip**](https://steamcommunity.com/sharedfiles/filedetails/?id=2155366756) is a **requirement** for this version of Beatrun to work correctly. [^2] A version is [included in this repository](/vmaniprework/) that is known to work with this version of Beatrun.
 >
-> **Do not** have Beatrun Community Edition enabled with this addon also installed. You *will* run into issues. ~~This will be fixed at some point...probably.~~ This will not be fixed on this branch.
+> **Do not** have Beatrun Community Edition enabled with this addon also installed. You *will* run into issues. This will be fixed at some point...probably.
 
 ### How-
 
