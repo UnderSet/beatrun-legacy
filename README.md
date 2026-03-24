@@ -34,6 +34,7 @@ If you're looking for what this is based off of, it's on the [`1.0.1`](https://g
 - **datae** for creating Beatrun
 - [x14y24HeadsUpDaisy font](https://hicchicc.github.io/00ff/)
 - [Datto D-DIN font](https://github.com/amcchord/datto-d-din)
+- scubamaster96 (on Discord) for grayscale icon idea
 
 [^1]: The files of this version I got was labeled v1.0.1 for somme reason.
 
