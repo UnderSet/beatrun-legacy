@@ -5,7 +5,7 @@
 
 Older version of infamous parkour gamemode Beatrun for Garry's Mod, now with source code extracted.
 
-This is dump of v1.01. Last modified October 14th 2022 (content 1:53 PM, binaries 2:20 PM *(client)* / 2:22 PM *(server)*)
+This is a dump of v1.01 [^1]. Last modified October 14th 2022 (content 1:53 PM, binaries 2:20 PM *(client)* / 2:22 PM *(server)*)
 
 See the `kitbashed` branch if the version originally uploaded to this repository is what you're looking for.
 
@@ -19,7 +19,7 @@ Code is untouched beyond being run through a linter to make it readable, and wil
 > Try [Beatrun Community Edition](https://steamcommunity.com/sharedfiles/filedetails/?id=3467179024) if the newest Beatrun's what you're looking for.
 
 > [!CAUTION]
-> [**VManip**](https://steamcommunity.com/sharedfiles/filedetails/?id=2155366756) is a **requirement** for this version of Beatrun to work correctly. [^1] A version is [included in this repository](/vmaniprework/) that is known to work with this version of Beatrun.
+> [**VManip**](https://steamcommunity.com/sharedfiles/filedetails/?id=2155366756) is a **requirement** for this version of Beatrun to work correctly. [^2] A version is [included in this repository](/vmaniprework/) that is known to work with this version of Beatrun.
 >
 > **Do not** have Beatrun Community Edition enabled with this addon also installed. You *will* run into issues. ~~This will be fixed at some point...probably.~~ This will not be fixed on this branch.
 
@@ -35,4 +35,6 @@ Code is untouched beyond being run through a linter to make it readable, and wil
 - [x14y24HeadsUpDaisy font](https://hicchicc.github.io/00ff/)
 - [Datto D-DIN font](https://github.com/amcchord/datto-d-din)
 
-[^1]: Another version might be required... I'll upload it into this repository if that turns out to be the case.
+[^1]: The files of this version I got was labeled v1.0.1 for somme reason.
+
+[^2]: Another version might be required... I'll upload it into this repository if that turns out to be the case.
