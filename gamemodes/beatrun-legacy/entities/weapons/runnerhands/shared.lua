@@ -131,7 +131,7 @@ function SWEP:Deploy()
 	self:SetBlockAnims(false)
 	
 	self:SetPunch(1)
-	RunConsoleCommand("fov_desired", 100)
+	-- RunConsoleCommand("fov_desired", 100)
 end
 
 function SWEP:Initialize()
