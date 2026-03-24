@@ -307,8 +307,9 @@ hook.Add("Think", "BodyAnimThink", function()
 end)
 
 local lastattachpos = Vector(0, 0, 0)
-function BodyAnimCalcView2(ply, pos, angles, fov)
-    if IsValid(BodyAnim) or attach ~= nil then
+function BodyAnimCalcView2(ply, pos, angles, fov, ...)
+    if calcviewrunning then return end
+    if (IsValid(BodyAnim) or attach ~= nil) then
         if IsValid(BodyAnim) then
             if followplayer then BodyAnim:SetPos(LocalPlayer():GetPos()) end
             attachId = BodyAnim:LookupAttachment("eyes")
@@ -357,16 +358,21 @@ function BodyAnimCalcView2(ply, pos, angles, fov)
                 ply:SetNoDraw(false)
                 view.angles = view.angles + ply:GetViewPunchAngles()
 
-                calcviewrunning = true
-                local view = hook.Run("CalcView", ply, pos, angles, fov, ...)
-                calcviewrunning = false
-                if !view then 
-                    fov = math.Remap(fov, 0, GetConVar("fov_desired"):GetInt(), 0, GetConVar("beatrun_fov"):GetInt())
-                    return
-                else
-                    view.fov = math.Remap(view.fov, 0, GetConVar("fov_desired"):GetInt(), 0, GetConVar("beatrun_fov"):GetInt())
-                    return view
-                end
+                pos:Set(view.pos)
+                angles:Set(view.angles)
+
+				calcviewrunning = true
+
+				local view = hook.Run("CalcView", ply, pos, angles, fov, ...)
+				calcviewrunning = false
+				if view and view.fov then 
+					view.fov = math.Remap(view.fov, 0, GetConVar("fov_desired"):GetInt(), 0, GetConVar("beatrun_fov"):GetInt())
+					
+					return view
+				else
+					fov = math.Remap(fov, 0, GetConVar("fov_desired"):GetInt(), 0, GetConVar("beatrun_fov"):GetInt())
+					return
+				end
 
                 -- return view
             else
