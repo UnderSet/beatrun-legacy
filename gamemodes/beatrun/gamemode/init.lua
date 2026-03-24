@@ -1,5 +1,5 @@
 -- if SERVER then
--- 	require("beatrun")
+-- 	-- require("beatrun")
 -- end
 AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
