@@ -32,11 +32,13 @@ If you're looking for what this is based off of, it's on the [`1.0.1`](https://g
 ### Changes
 - Fixed some stuff that was causing Lua errors due to changes in GMod between 2022 and now
 - Backported some stuff from Community Edition *(see above)*
+    - ***Course database is not available.*** Download courses using Beatrun Community Edition. Saved courses can be loaded normally.
   - Notably: Build Mode and course entities
     - This allows you to play modern Beatrun courses on this version...not that you should
     - *Incomplete implementation* - many visual aspects have been removed/not fixed for the sake of it just working and some stuff still doesn't work right
 
 ### Credits
+- [**Beatrun Community Edition contributors**](https://github.com/JonnyBro/beatrun/graphs/contributors)
 - [**JonnyBro**](https://github.com/jonnybro) and **relaxtakenotes** for Beatrun Community Edition (which inspired this whole thing) and `lual_loadbuffer` method (`lual_loadbufferx` in my case), which made all this possible
 - **EL1S1ON** for files of this version
 - [**x64dbg**](https://github.com/x64dbg/x64dbg), which I used to make this
