@@ -17,15 +17,24 @@ If you're looking for what this is based off of, it's on the [`1.0.1`](https://g
 > This (v1.01) is an old version from late 2022 and is *incompatible* with (most?) current Beatrun courses, and has *drastically different gameplay*.
 >
 > Try [Beatrun Community Edition](https://steamcommunity.com/sharedfiles/filedetails/?id=3467179024) if the newest Beatrun's what you're looking for.
+>
+> This version has some backported stuff from Community Edition so it can load Community Edition courses, however I would not recommend doing so anyway.
 
 > [!CAUTION]
 > [**VManip**](https://steamcommunity.com/sharedfiles/filedetails/?id=2155366756) is a **requirement** for this version of Beatrun to work correctly. [^2] A version is [included in this repository](/vmaniprework/) that is known to work with this version of Beatrun.
 >
-> **Do not** have Beatrun Community Edition enabled with this addon also installed. You *will* run into issues. This will be fixed at some point...probably.
+> ~~**Do not** have Beatrun Community Edition enabled with this addon also installed. You *will* run into issues. This will be fixed at some point...probably.~~ This has been fixed.
 
 ### How-
 
 [**x64dbg**](https://github.com/x64dbg/x64dbg) and a little bit of patience.
+
+### Changes
+- Fixed some stuff that was causing Lua errors due to changes in GMod between 2022 and now
+- Backported some stuff from Community Edition *(see above)*
+  - Notably: Build Mode and course entities
+    - This allows you to play modern Beatrun courses on this version...not that you should
+    - *Incomplete implementation* - many visual aspects have been removed/not fixed for the sake of it just working and some stuff still doesn't work right
 
 ### Credits
 - [**JonnyBro**](https://github.com/jonnybro) and **relaxtakenotes** for Beatrun Community Edition (which inspired this whole thing) and `lual_loadbuffer` method (`lual_loadbufferx` in my case), which made all this possible

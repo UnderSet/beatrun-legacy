@@ -63,6 +63,8 @@ function LoadCheckpoints()
 end
 
 if CLIENT then
+	CreateClientConVar("Beatrun_FastStart", "0", true, true, "Use an optional faster countdown when starting courses.", 0, 1)
+
 	net.Receive("Checkpoint_Hit", function()
 		local timetaken = CurTime()-lastcptime
 		local vspb
@@ -226,6 +228,13 @@ function CourseHUD()
 		surface.SetTextColor(timecolor)
 		surface.DrawText(timetext)
 	end
+
+	if IsValid(Checkpoints[ply:GetNW2Int("CPNum")]) then
+		local pos = Checkpoints[ply:GetNW2Int("CPNum")]:GetPos():ToScreen()
+
+		draw.DrawText(ply:GetNW2Int("CPNum") .. "/" .. #Checkpoints, "BeatrunHUD", pos.x, pos.y, color_white, TEXT_ALIGN_CENTER)
+	end
+
 end
 hook.Add("HUDPaint","CourseHUD",CourseHUD)
 
@@ -271,6 +280,8 @@ function LoadReplayData()
 end
 
 function StartCourse(spawntime)
+	local faststartmult = LocalPlayer():GetInfoNum("Beatrun_FastStart", 0) > 0 and 0.5 or 1
+
 	table.Empty(cptimes)
 	pbtimes = LoadCheckpointTime()
 	pbtotal = 0
@@ -283,7 +294,7 @@ function StartCourse(spawntime)
 	countdown = 0
 	countdownalpha = 255
 	Course_GoTime = spawntime
-	Course_StartTime = spawntime + 2
+	Course_StartTime = spawntime + 2 * faststartmult
 	lastcptime = Course_StartTime
 	if Course_Name != "" then
 		hook.Add("Think", "StartCountdown", StartCountdown)

@@ -49,10 +49,13 @@ if SERVER then
 end
 if CLIENT then
 	CreateClientConVar("Beatrun_FOV", 110, true, true, "'Woah how are you moving this fast' and other hilarious jokes", 70, 140)
+	CreateClientConVar("Beatrun_CPSave", 1, true, true, "Save checkpoints?", 0, 1)
 end
-hook.Add( "PlayerSwitchFlashlight", "BlockFlashLight", function( ply, enabled )
-	return false
-end )
+
+-- what the fuck, datae?
+-- hook.Add( "PlayerSwitchFlashlight", "BlockFlashLight", function( ply, enabled )
+-- 	return false
+-- end )
 
 hook.Add( "PlayerNoClip", "BlockNoClip", function( ply, enabled )
 	if enabled and Course_Name != "" then

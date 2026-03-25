@@ -54,6 +54,9 @@ hook.Add("PlayerFootstep", "MEStepSound", function(ply, pos, foot, sound, volume
         ply:EmitSound("Land." .. landsound)
         ply.FootstepLand = false
     end
+
+    hook.Run("PlayerFootstepME", ply, pos, foot, sound, volume, filter)
+
     return true
 end)
 

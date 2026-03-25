@@ -90,6 +90,8 @@ for k,v in ipairs(misc) do
 end
 misc = nil
 
+PrintTable(buildmode_props)
+
 local buildmode_ents = {
 ["br_swingbar"] = true,
 ["tt_cp"] = true,
@@ -596,20 +598,27 @@ concommand.Add("Beatrun_SaveCourse", function(ply, cmd, args, argstr)
 	SaveCourse(name)
 end)
 
-function LoadCourse(id)
-	local dir = "beatrun/courses/"..game.GetMap().."/"
-	local save = file.Read(dir..id..".txt","DATA")
-	if !save then print("NON-EXISTENT SAVE",id) return end
+function LoadCourse(filename)
+	local dir = string.format("beatrun/courses/%s/", game.GetMap())
+	local raw = file.Read(dir .. filename, "DATA")
+	local save = util.Compress(raw)
+
+	if not save then
+		print("NON-EXISTENT SAVE: ", filename)
+
+		return
+	end
+
 	net.Start("BuildMode_ReadCourse")
-	net.WriteData(save)
+		net.WriteData(save)
 	net.SendToServer()
+
 	LoadCheckpoints()
-	Course_ID = id
 end
-concommand.Add("Beatrun_LoadCourse", function(ply, cmd, args, argstr)
-	local id = args[1] or "Unnamed"
-	LoadCourse(id)
-end)
+-- concommand.Add("Beatrun_LoadCourse", function(ply, cmd, args, argstr)
+-- 	local id = args[1] or "Unnamed"
+-- 	LoadCourse(filename)
+-- end)
 
 concommand.Add("Beatrun_PrintCourse", function(ply, cmd, args, argstr)
 	local dir = "beatrun/courses/"..game.GetMap().."/*.txt"

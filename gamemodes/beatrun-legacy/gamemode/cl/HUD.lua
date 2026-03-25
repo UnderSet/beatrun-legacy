@@ -27,7 +27,7 @@ local tab = {
 hook.Add("RenderScreenspaceEffects", "BeatrunNoclipBW", function()
     local ply = LocalPlayer()
     local inp = color ~= 1
-    local noclipping = ply:GetMoveType() == MOVETYPE_NOCLIP and not BuildMode and ply:GetMantle() == 0 and ply:GetClimbing() == 0
+    local noclipping = ply:GetMoveType() == MOVETYPE_NOCLIP and not BuildMode and ply:GetMantle() == 0 and ply:GetClimbing() == 0 and !IsValid(ply:GetLadder())
     if noclipping or inp then
         tab["$pp_colour_colour"] = color
         DrawColorModify(tab)
@@ -66,6 +66,24 @@ surface.CreateFont("BeatrunHUDSmall", {
     blursize = 0,
     scanlines = 2,
     antialias = false,
+    underline = false,
+    italic = false,
+    strikeout = false,
+    symbol = false,
+    rotary = false,
+    shadow = true,
+    additive = false,
+    outline = false,
+})
+
+surface.CreateFont("BeatrunHUDWatermark", {
+    font = "D-DIN",
+    extended = false,
+    size = ScreenScale(6.5),
+    weight = 500,
+    blursize = 0,
+    scanlines = 0,
+    antialias = true,
     underline = false,
     italic = false,
     strikeout = false,
@@ -178,10 +196,11 @@ local function BeatrunHUD()
         if pl > 10 then lastloss = CT + 4 end
     end
 
-    surface.SetFont("DebugFixedSmall")
-    local vtext = (ply:SteamID() or "?") .. " | " .. VERSIONGLOBAL
+    surface.SetFont("BeatrunHUDWatermark")
+    local vtext = (ply:SteamID() or "?") .. " | beatrun-legacy " .. VERSIONGLOBAL .. " | " ..
+        (system.IsWindows() and "win-" or system.IsLinux() and "linux-" or "mac-") .. BRANCH  .. "_" .. VERSION
     local tw, th = surface.GetTextSize(vtext)
-    surface.SetTextColor(255, 255, 255, 15)
+    surface.SetTextColor(255, 255, 255, 123)
     surface.SetTextPos(scrw - tw, 0)
     surface.DrawText(vtext)
 end

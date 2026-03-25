@@ -47,6 +47,12 @@ function ENT:StartTouch(ent)
 		if ent:GetNW2Int("CPNum", 1) > table.Count(Checkpoints) then
 			FinishCourse(ent)
 		else
+			ent.CPSavePos = ent:GetPos()
+			ent.CPSaveAng = ent:EyeAngles()
+			ent.CPSaveVel = ent:GetVelocity()
+
+			ent:SaveParkourState()
+
 			net.Start("Checkpoint_Hit")
 			net.WriteUInt(ent:GetNW2Int("CPNum", 1), 8)
 			net.Send(ent)

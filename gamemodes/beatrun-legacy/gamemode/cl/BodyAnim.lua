@@ -365,12 +365,11 @@ function BodyAnimCalcView2(ply, pos, angles, fov, ...)
 
 				local view = hook.Run("CalcView", ply, pos, angles, fov, ...)
 				calcviewrunning = false
-				if view and view.fov then 
-					view.fov = math.Remap(view.fov, 0, GetConVar("fov_desired"):GetInt(), 0, GetConVar("beatrun_fov"):GetInt())
-					
+
+                -- idk what this block does but I don't wanna touch it
+				if view then 					
 					return view
 				else
-					fov = math.Remap(fov, 0, GetConVar("fov_desired"):GetInt(), 0, GetConVar("beatrun_fov"):GetInt())
 					return
 				end
 

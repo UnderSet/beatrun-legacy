@@ -1,48 +1,93 @@
-local coursepanel = {}
-coursepanel.w = 1200
-coursepanel.h = 650
-coursepanel.x = 1920*0.5 - coursepanel.w*0.5
-coursepanel.y = 1080*0.5 - coursepanel.h*0.5
+local coursepanel = {
+	w = 900,
+	h = 650,
+	bgcolor = Color(32, 32, 32),
+	outlinecolor = Color(54, 55, 56),
+	alpha = 0.9,
+	elements = {}
+}
 
-coursepanel.bgcolor = Color(32,32,32)
-coursepanel.outlinecolor = Color(54,55,56)
-coursepanel.alpha = 0.9
-coursepanel.elements = {}
+coursepanel.x = 950 - coursepanel.w * 0.5
+coursepanel.y = 550 - coursepanel.h * 0.5
 
-local function closebutton(self)
-	AEUI:Clear()
+local courselist = {
+	w = 800,
+	h = 450,
+	x = 1000 - coursepanel.w * 0.5,
+	y = 648 - coursepanel.h * 0.5,
+	bgcolor = Color(32, 32, 32),
+	outlinecolor = Color(54, 55, 56),
+	alpha = 0.9,
+	elements = {}
+}
+
+local function sacheck()
+	return LocalPlayer():IsSuperAdmin()
 end
 
-AEUI:AddText(coursepanel, "Time Trials - "..game.GetMap(), "AEUIVeryLarge", 20, 30)
-AEUI:AddButton(coursepanel, "  X  ", closebutton, "AEUILarge", coursepanel.w-47, 0)
-local courselist = {}
-courselist.w = 800
-courselist.h = 450
-courselist.x = 1920*0.51 - coursepanel.w*0.5
-courselist.y = 1080*0.6 - coursepanel.h*0.5
+local function stopbutton()
+	-- if CourseGhost:GetBool() then StopGhostRecording(false, false) end
 
-courselist.bgcolor = Color(32,32,32)
-courselist.outlinecolor = Color(54,55,56)
-courselist.alpha = 0.9
-courselist.elements = {}
+	net.Start("Course_Stop")
+	net.SendToServer()
 
+	AEUI:RemovePanel(courselist)
+	AEUI:RemovePanel(coursepanel)
+end
 
-function OpenCourseMenu(ply)
+local function buildmodebutton()
+	AEUI:RemovePanel(courselist)
+	AEUI:RemovePanel(coursepanel)
+
+	LocalPlayer():ConCommand("Beatrun_BuildMode")
+end
+
+local function closebutton()
+	AEUI:RemovePanel(courselist)
+	AEUI:RemovePanel(coursepanel)
+end
+
+AEUI:Text(coursepanel, language.GetPhrase("beatrun.coursemenu.trials"):format(string.Replace(game.GetMap(), " ", "-")), "AEUIVeryLarge", 20, 30)
+
+AEUI:AddButton(coursepanel, "  X  ", closebutton, "AEUILarge", coursepanel.w - 47, 0)
+
+local buildmodebutton = AEUI:AddButton(coursepanel, "#beatrun.coursemenu.buildmode", buildmodebutton, "AEUILarge", coursepanel.w - 400, coursepanel.h - 50)
+buildmodebutton.greyed = not sacheck
+
+local stopbutton = AEUI:AddButton(coursepanel, "#beatrun.coursemenu.freeplay", stopbutton, "AEUILarge", coursepanel.w - 750, coursepanel.h - 50)
+stopbutton.greyed = not sacheck
+
+function OpenCourseMenu()
 	AEUI:AddPanel(coursepanel)
 	AEUI:AddPanel(courselist)
-	local dir = "beatrun/courses/"..game.GetMap().."/"
-	local dirsearch = dir.."*.txt"
-	local files = file.Find(dirsearch,"DATA","datedesc")
-	PrintTable(files)
+
+	local dir = "beatrun/courses/" .. string.Replace(game.GetMap(), " ", "-") .. "/"
+	local dirsearch = dir .. "*.txt"
+	local files = file.Find(dirsearch, "DATA", "datedesc")
+
+	if BEATRUN_DEBUG then PrintTable(files) end
+
 	table.Empty(courselist.elements)
-	for k,v in pairs(files) do
-		local data = file.Read(dir..v, "DATA")
-		data = util.Decompress(data)
-		if data then
-			data = util.JSONToTable(data)
-			local courseentry = AEUI:AddText(courselist, (data[5] or "ERROR"), "AEUILarge", 10, 40 * #courselist.elements)
-			courseentry.courseid = v:Split(".txt")[1]
-			courseentry.onclick = function(self) LocalPlayer():EmitSound("A_TT_CP_Positive.wav") LoadCourse(self.courseid) end
+
+	for _, v in pairs(files) do
+		local data = file.Read(dir .. v, "DATA")
+		local course = util.Decompress(data) or data
+
+		if course then
+			local coursetable = util.JSONToTable(course)
+			local filename = v:Split(".txt")[1]
+			local courseid = util.CRC(course)
+			local courseentry = AEUI:Text(courselist, coursetable[5] and coursetable[5] .. " (" .. courseid .. ")" or "ERROR", "AEUILarge", 10, 40 * #courselist.elements)
+
+			function courseentry:onclick()
+				LocalPlayer():EmitSound("buttonclick.wav")
+				LoadCourse(filename)
+
+				AEUI:RemovePanel(courselist)
+				AEUI:RemovePanel(coursepanel)
+			end
+
+			courseentry.greyed = not sacheck
 		end
 	end
 end
@@ -51,5 +96,5 @@ hook.Add("InitPostEntity", "CourseMenuCommand", function()
 	concommand.Add("Beatrun_CourseMenu", OpenCourseMenu)
 	hook.Remove("InitPostEntity", "CourseMenuCommand")
 end)
+
 concommand.Add("Beatrun_CourseMenu", OpenCourseMenu)
--- timer.Simple(0, function() OpenCourseMenu() end)

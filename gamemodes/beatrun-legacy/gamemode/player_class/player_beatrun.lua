@@ -31,65 +31,106 @@ PLAYER.RunSpeed				= 400
 -- Set up the network table accessors
 --
 function PLAYER:SetupDataTables()
+	-- NOT ALL OF THESE ARE USED. I copied these from Community Edition.
 
-	BaseClass.SetupDataTables( self )
-	self.Player:NetworkVar( "Float", 0, "MEMoveLimit" )
-	self.Player:NetworkVar( "Float", 1, "MESprintDelay" )
-	self.Player:NetworkVar( "Float", 2, "MEAng" )
-	
-	self.Player:NetworkVar( "Int", 0, "Climbing" )
-	self.Player:NetworkVar( "Float", 3, "ClimbingTime" )
-	self.Player:NetworkVar( "Vector", 0, "ClimbingStart" )
-	self.Player:NetworkVar( "Vector", 1, "ClimbingEnd" )
-	
-	self.Player:NetworkVar( "Int", 1, "Wallrun")
-	self.Player:NetworkVar( "Float", 4, "WallrunTime")
-	self.Player:NetworkVar( "Float", 5, "WallrunSoundTime")
-	self.Player:NetworkVar( "Vector", 2, "WallrunDir")
-	
-	self.Player:NetworkVar( "Bool", 0, "Sliding" )
-	self.Player:NetworkVar( "Float", 6, "SlidingTime" )
-	self.Player:NetworkVar( "Float", 7, "SlidingDelay" )
-	
-	self.Player:NetworkVar( "Bool", 1, "StepRight" )
-	self.Player:NetworkVar( "Float", 8, "StepRelease" )
-	
-	self.Player:NetworkVar( "Bool", 2, "Grappling" )
-	self.Player:NetworkVar( "Vector", 3, "GrapplePos" )
-	
-	self.Player:NetworkVar( "Entity", 0, "Swingbar" )
-	
-	self.Player:NetworkVar( "Bool", 3, "CrouchJump" )
-	self.Player:NetworkVar( "Float", 9, "CrouchJumpTime" )
-	
-	self.Player:NetworkVar( "Float", 9, "SafetyRollKeyTime" )
-	self.Player:NetworkVar( "Float", 10, "SafetyRollTime" )
-	self.Player:NetworkVar( "Angle", 0, "SafetyRollAng" )
-	
-	self.Player:NetworkVar( "Bool", 4, "Quickturn" )
-	self.Player:NetworkVar( "Float", 10, "QuickturnTime" )
-	self.Player:NetworkVar( "Angle", 1, "QuickturnAng" )
-	
-	self.Player:NetworkVar( "Bool", 5, "WallrunElevated" )
-	
+	BaseClass.SetupDataTables(self)
+	self.Player:NetworkVar("Float", 0, "MEMoveLimit")
+	self.Player:NetworkVar("Float", 1, "MESprintDelay")
+	self.Player:NetworkVar("Float", 2, "MEAng")
+
+	self.Player:NetworkVar("Int", 0, "Climbing")
+	self.Player:NetworkVar("Float", 3, "ClimbingTime")
+	self.Player:NetworkVar("Vector", 0, "ClimbingStart")
+	self.Player:NetworkVar("Vector", 1, "ClimbingEnd")
+	self.Player:NetworkVar("Vector", 7, "ClimbingEndOld")
+	self.Player:NetworkVar("Float", 24, "ClimbingDelay")
+	self.Player:NetworkVar("Angle", 3, "ClimbingAngle")
+
+	self.Player:NetworkVar("Int", 1, "Wallrun")
+	self.Player:NetworkVar("Float", 4, "WallrunTime")
+	self.Player:NetworkVar("Float", 5, "WallrunSoundTime")
+	self.Player:NetworkVar("Vector", 2, "WallrunDir")
+	self.Player:NetworkVar("Vector", 8, "WallrunOrigVel")
+	self.Player:NetworkVar("Int", 4, "WallrunCount")
+
+	self.Player:NetworkVar("Bool", 0, "Sliding")
+	self.Player:NetworkVar("Float", 6, "SlidingTime")
+	self.Player:NetworkVar("Float", 7, "SlidingDelay")
+	self.Player:NetworkVar("Vector", 4, "SlidingLastPos")
+	self.Player:NetworkVar("Float", 18, "SlidingVel")
+	self.Player:NetworkVar("Float", 19, "SlidingStrafe")
+	self.Player:NetworkVar("Bool", 9, "SlidingSlippery")
+	self.Player:NetworkVar("Float", 20, "SlidingSlipperyUpdate")
+	self.Player:NetworkVar("Angle", 2, "SlidingAngle")
+
+	self.Player:NetworkVar("Bool", 1, "StepRight")
+	self.Player:NetworkVar("Float", 8, "StepRelease")
+
+	self.Player:NetworkVar("Bool", 2, "Grappling")
+	self.Player:NetworkVar("Vector", 3, "GrapplePos")
+	self.Player:NetworkVar("Float", 29, "GrappleLength")
+
+	self.Player:NetworkVar("Entity", 0, "Swingbar")
+
+	self.Player:NetworkVar("Bool", 3, "CrouchJump")
+	self.Player:NetworkVar("Float", 9, "CrouchJumpTime")
+	self.Player:NetworkVar("Bool", 12, "CrouchJumpBlocked")
+
+	self.Player:NetworkVar("Float", 9, "SafetyRollKeyTime")
+	self.Player:NetworkVar("Float", 10, "SafetyRollTime")
+	self.Player:NetworkVar("Angle", 0, "SafetyRollAng")
+
+	self.Player:NetworkVar("Bool", 4, "Quickturn")
+	self.Player:NetworkVar("Float", 10, "QuickturnTime")
+	self.Player:NetworkVar("Angle", 1, "QuickturnAng")
+
+	self.Player:NetworkVar("Bool", 5, "WallrunElevated")
 
 	--We have to store this info on the player as multiple people can use one swingbar
-	self.Player:NetworkVar( "Float", 11, "SBOffset" )
-	self.Player:NetworkVar( "Float", 12, "SBOffsetSpeed" )
-	self.Player:NetworkVar( "Float", 13, "SBStartLerp" )
-	self.Player:NetworkVar( "Float", 14, "SBDelay" )
-	self.Player:NetworkVar( "Int", 2, "SBPeak" )
-	self.Player:NetworkVar( "Bool",6, "SBDir" )
-	self.Player:NetworkVar( "Entity",1, "SwingbarLast" )
-	
-	self.Player:NetworkVar( "Entity", 2, "Swingpipe" )
-	self.Player:NetworkVar( "Entity", 3, "Rabbit" )
-	self.Player:NetworkVar( "Int", 3, "RabbitSeat" )
-	
-	
-	self.Player:NetworkVar( "Float", 15, "OverdriveCharge" )
-	self.Player:NetworkVar( "Float", 16, "OverdriveMult" )
+	self.Player:NetworkVar("Float", 11, "SBOffset")
+	self.Player:NetworkVar("Float", 12, "SBOffsetSpeed")
+	self.Player:NetworkVar("Float", 13, "SBStartLerp")
+	self.Player:NetworkVar("Float", 14, "SBDelay")
+	self.Player:NetworkVar("Int", 2, "SBPeak")
+	self.Player:NetworkVar("Bool", 6, "SBDir")
+	self.Player:NetworkVar("Entity", 1, "SwingbarLast")
 
+	self.Player:NetworkVar("Entity", 2, "Swingpipe")
+	self.Player:NetworkVar("Entity", 3, "Rabbit")
+	self.Player:NetworkVar("Int", 3, "RabbitSeat")
+
+	self.Player:NetworkVar("Float", 15, "OverdriveCharge")
+	self.Player:NetworkVar("Float", 16, "OverdriveMult")
+
+	self.Player:NetworkVar("Bool", 7, "JumpTurn")
+	self.Player:NetworkVar("Float", 17, "JumpTurnRecovery")
+
+	self.Player:NetworkVar("Bool", 8, "WasOnGround")
+
+	self.Player:NetworkVar("Entity", 4, "Ladder")
+	self.Player:NetworkVar("Float", 21, "LadderDelay")
+	self.Player:NetworkVar("Float", 22, "LadderHeight")
+	self.Player:NetworkVar("Bool", 10, "LadderEntering")
+	self.Player:NetworkVar("Bool", 11, "LadderHand")
+	self.Player:NetworkVar("Vector", 5, "LadderStartPos")
+	self.Player:NetworkVar("Vector", 6, "LadderEndPos")
+	self.Player:NetworkVar("Float", 23, "LadderLerp")
+
+	self.Player:NetworkVar("Entity", 5, "Zipline")
+	self.Player:NetworkVar("Float", 21, "ZiplineStart")
+	self.Player:NetworkVar("Float", 22, "ZiplineFraction")
+	self.Player:NetworkVar("Float", 23, "ZiplineSpeed")
+	self.Player:NetworkVar("Float", 25, "ZiplineDelay")
+
+	self.Player:NetworkVar("Int", 5, "MeleeDamage")
+	self.Player:NetworkVar("Float", 26, "MeleeTime")
+	self.Player:NetworkVar("Float", 27, "MeleeDelay")
+	self.Player:NetworkVar("Int", 6, "Melee")
+
+	self.Player:NetworkVar("Float", 28, "Balance")
+	self.Player:NetworkVar("Entity", 6, "BalanceEntity")
+
+	self.Player:NetworkVar("Bool", 13, "Dive")
 end
 
 
@@ -141,28 +182,58 @@ function PLAYER:Spawn()
 	local col = ply:GetInfo( "cl_playercolor" )
 	ply:SetPlayerColor( Vector( col ) )
 
+	local faststartmult = (ply:GetInfoNum("Beatrun_FastStart", 0) > 0 and 0.5) or 1
 	local col = Vector( ply:GetInfo( "cl_weaponcolor" ) )
 	if ( col:Length() < 0.001 ) then
 		col = Vector( 0.001, 0.001, 0.001 )
 	end
 	ply:SetWeaponColor( col )
+
+	local CPSave = false
 	
 	if Course_Name != "" and Course_StartPos != vector_origin then
-		ply:SetPos(Course_StartPos)
-		ply:SetEyeAngles(Angle(0,Course_StartAng,0))
-		ply:SetLocalVelocity(vector_origin)
-		timer.Simple(0.1, function() ply:SetLocalVelocity(vector_origin) ply:SetPos(Course_StartPos) end) --Failsafe
+		if ply:GetInfoNum("Beatrun_CPSave", 0) >= 1 and ply:GetNW2Int("CPNum", 1) > 1 and ply.CPSavePos and ply.LastSpawnTime + 0.6 < CurTime() then
+			ply:SetPos(ply.CPSavePos)
+			ply:SetEyeAngles(ply.CPSaveAng)
+			ply:SetLocalVelocity(ply.CPSaveVel)
+			ply:LoadParkourState()
+
+			CPSave = true
+		else
+			ply.CPSavePos = nil
+			ply.CPsaveAng = nil
+			ply.CPsaveVel = nil
+
+			ply:SetPos(Course_StartPos)
+			ply:SetEyeAngles(Angle(0, Course_StartAng, 0))
+			ply:SetLocalVelocity(vector_origin)
+
+			ply.Course_StartTime = CurTime() + (2 * faststartmult)
+
+			net.Start("BeatrunSpawn")
+				net.WriteFloat(CurTime())
+				net.WriteBool(ply.InReplay)
+			net.Send(ply)
+
+			ply.SpawnFreezeTime = CurTime() + (1.75 * faststartmult)
+
+			-- idk at this point
+			ply:SetNW2Int("CPNum", 1)
+
+			--Failsafe
+			timer.Simple(0.1, function()
+				ply:SetLocalVelocity(vector_origin)
+				ply:SetPos(Course_StartPos)
+			end)
+
+			-- ReplayStop(ply)
+			-- ReplayStart(ply)
+		end
 	end
 	
-	if !ply.InReplay then
-		ply:SetNW2Float("CPNum", 1)
+	if !ply.InReplay and !CPSave then
+		ply:SetNW2Int("CPNum", 1)
 	end
-	net.Start("BeatrunSpawn")
-	net.WriteFloat(CurTime())
-	net.WriteBool(ply.InReplay)
-	net.Send(ply)
-	
-	ply.SpawnFreezeTime = CurTime() + 1.75
 	
 	ply:SetCollisionGroup(COLLISION_GROUP_WEAPON)
 	ply:SetAvoidPlayers(false)
@@ -177,6 +248,7 @@ function PLAYER:Spawn()
 	ply:SetOverdriveCharge(0)
 	ply:SetOverdriveMult(1)
 
+	ply.LastSpawnTime = CurTime()
 end
 
 hook.Add("SetupMove", "SpawnFreeze", function(ply, mv, cmd)
@@ -268,6 +340,67 @@ function meta:ResetParkourState()
 	self:SetSafetyRollTime(0)
 	self:SetQuickturnTime(0)
 end
+
+function meta:SaveParkourState()
+	self.ParkourSave = {
+		self:GetSliding(),
+		self:GetCrouchJump(),
+		self:GetQuickturn(),
+		self:GetGrappling(),
+		self:GetSwingbar(),
+		self:GetZipline(),
+		self:GetLadder(),
+		self:GetMantle(),
+		self:GetWallrun(),
+		self:GetMEMoveLimit(),
+		self:GetMESprintDelay(),
+		self:GetMEAng(),
+		self:GetClimbing(),
+		self:GetClimbingTime(),
+		self:GetWallrunTime(),
+		self:GetWallrunSoundTime(),
+		self:GetSlidingTime(),
+		self:GetSlidingDelay(),
+		self:GetCrouchJumpTime(),
+		self:GetSafetyRollKeyTime(),
+		self:GetSafetyRollTime(),
+		self:GetQuickturnTime(),
+		self:GetJumpTurn(),
+		self:GetDive(),
+	}
+end
+
+function meta:LoadParkourState()
+	local save = self.ParkourSave
+	if not save then return end
+
+	self:SetSliding(save[1])
+	self:SetCrouchJump(save[2])
+	self:SetQuickturn(save[3])
+	self:SetGrappling(save[4])
+	self:SetSwingbar(save[5])
+	self:SetZipline(save[6])
+	self:SetLadder(save[7])
+	self:SetMantle(save[8])
+	self:SetWallrun(save[9])
+	self:SetMEMoveLimit(save[10])
+	self:SetMESprintDelay(save[11])
+	self:SetMEAng(save[12])
+	self:SetClimbing(save[13])
+	self:SetClimbingTime(save[14])
+	self:SetWallrunTime(save[15])
+	self:SetWallrunSoundTime(save[16])
+	self:SetSlidingTime(save[17])
+	self:SetSlidingDelay(save[18])
+	self:SetCrouchJumpTime(save[19])
+	self:SetSafetyRollKeyTime(save[20])
+	self:SetSafetyRollTime(save[21])
+	self:SetQuickturnTime(save[22])
+	self:SetJumpTurn(save[23])
+	self:SetDive(save[24])
+end
+
+
 
 function meta:ResetParkourTimes()
 	self:SetClimbingTime(0)

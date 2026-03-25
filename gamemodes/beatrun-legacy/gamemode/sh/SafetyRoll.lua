@@ -77,7 +77,19 @@ end)
 
 
 if SERVER then
+	local safelandents = {
+		br_mat = true
+	}
+
 	hook.Add("GetFallDamage", "SafetyRoll", function(ply, speed)
+		local groundEnt = ply:GetGroundEntity()
+
+		if IsValid(groundEnt) and safelandents[groundEnt:GetClass()] then
+			groundEnt:EmitSound("mirrorsedge/GameplayObjects/Landing_01.ogg", 80, 100 + math.random(-30, 10))
+
+			return 0
+		end
+
 		if speed >= 750 then
 			if speed < 750 and ply:GetSafetyRollKeyTime() > CurTime() and !ply:GetCrouchJump() and !ply:Crouching() then
 				return 0
