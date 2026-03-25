@@ -1,5 +1,5 @@
 STAR = "★"
-VERSIONGLOBAL = "v1.01(+5)"
+VERSIONGLOBAL = "v1.01(+6)"
 DeriveGamemode( "sandbox" )
 GM.Name 	= "Beatrun Legacy"
 GM.Author 	= "datae (original author)"
