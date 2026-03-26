@@ -1019,6 +1019,12 @@ if CLIENT then
 		return saved and id or nil
 	end
 
+	concommand.Add("Beatrun_SaveCourse", function(ply, cmd, args, argstr)
+		local name = args[1] or "Unnamed"
+		SaveCourse(name, 325) -- this version doesn't support speed changes...yet
+	end)
+
+
 	function LoadCourse(filename)
 		print(filename)
 
