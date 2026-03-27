@@ -2,6 +2,7 @@ local showtotalXP = CreateClientConVar("Beatrun_HUDXP", "1", true, false, "Show 
 local sway = CreateClientConVar("Beatrun_HUDSway", "1", true, false, "Display HUD swaying", 0, 1)
 local dynamic = CreateClientConVar("Beatrun_HUDDynamic", "0", true, false, "Hide HUD when moving", 0, 1)
 local hidden = CreateClientConVar("Beatrun_HUDHidden", "0", true, false, "Hides most of the XP HUD", 0, 1)
+local watermark = CreateClientConVar("Beatrun_HUDWatermark", "3", true, false, "Version watermark on the top right. In order of 0 to 3: none, version only, version and SteamID (like original), and full (custom)", 0, 3)
 local packetloss = Material("vgui/packetloss.png")
 local lastloss = 0
 local hide = {
@@ -195,14 +196,20 @@ local function BeatrunHUD()
         surface.DrawText(pl)
         if pl > 10 then lastloss = CT + 4 end
     end
+end
 
+local function BeatrunHUDWatermark()
+    if !watermark:GetBool() then return end
+
+    cam.Start2D()
     surface.SetFont("BeatrunHUDWatermark")
-    local vtext = (ply:SteamID() or "?") .. " | beatrun-legacy " .. VERSIONGLOBAL .. " | " ..
-        (system.IsWindows() and "win-" or system.IsLinux() and "linux-" or "mac-") .. BRANCH  .. "_" .. VERSION
+    local vtext = (watermark:GetInt() >= 2 and (LocalPlayer():SteamID() .. " | ") or "") .. "beatrun-legacy " .. VERSIONGLOBAL ..
+        (watermark:GetInt() >= 3 and ((system.IsWindows() and " | win-" or system.IsLinux() and " | linux-" or " | mac-") .. BRANCH  .. "_" .. VERSION) or "")
     local tw, th = surface.GetTextSize(vtext)
     surface.SetTextColor(255, 255, 255, 123)
-    surface.SetTextPos(scrw - tw, 0)
+    surface.SetTextPos(ScrW() - tw, 0)
     surface.DrawText(vtext)
+    cam.End2D()
 end
 
 local allply
@@ -277,6 +284,7 @@ end
 
 hook.Add("HUDPaint", "BeatrunHUD", BeatrunHUD)
 hook.Add("HUDPaint", "BeatrunLeaderboard", BeatrunLeaderboard)
+hook.Add("PostRender", "BeatrunHUDWatermark", BeatrunHUDWatermark)
 local lastchatply = nil
 hook.Add("OnPlayerChat", "BeatrunChatSound", function(ply, text, teamChat, isDead)
     if lastchatply ~= ply then
