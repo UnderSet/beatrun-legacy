@@ -19,9 +19,9 @@ local function warnclosebutton(self)
     bigboy = true
 end
 
-AEUI:AddText(welcome, "Welcome to the public test server\nScroll down for commands\n\nIf you don't know how to do something, ask\n\nPress R to respawn", "AEUILarge", welcome.w / 2, 100, true)
-AEUI:AddText(welcome, "If you see this again someone refreshed the fucking lua", "AEUIDefault", welcome.w / 2, 375, true)
-AEUI:AddText(welcome, "Beatrun_FOV - Changes your FOV (70-140)\nToggleWhitescale - Mirror's Edge-ify the map", "AEUILarge", welcome.w / 2, 475, true)
+AEUI:Text(welcome, "Welcome to the public test server\nScroll down for commands\n\nIf you don't know how to do something, ask\n\nPress R to respawn", "AEUILarge", welcome.w / 2, 100, true)
+AEUI:Text(welcome, "If you see this again someone refreshed the fucking lua", "AEUIDefault", welcome.w / 2, 375, true)
+AEUI:Text(welcome, "Beatrun_FOV - Changes your FOV (70-140)\nToggleWhitescale - Mirror's Edge-ify the map", "AEUILarge", welcome.w / 2, 475, true)
 AEUI:AddButton(welcome, "  X  ", closebutton, "AEUILarge", welcome.w - 47, 0)
 if not game.SinglePlayer() then return end
 local addons = 0
