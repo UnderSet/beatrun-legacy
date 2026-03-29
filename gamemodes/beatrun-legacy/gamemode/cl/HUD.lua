@@ -112,6 +112,8 @@ end
 
 local hidealpha = 0
 local function BeatrunHUD()
+    -- if you're looking for the speedometer...it's in sh/Checkpoints.lua lmao
+
     if BuildMode then return end
     local shoulddraw = hook.Run("BeatrunDrawHUD")
     if shoulddraw == false then return end

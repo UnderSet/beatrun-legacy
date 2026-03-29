@@ -127,6 +127,41 @@ if CLIENT then
 		net.SendToServer()
 		timealpha = 1000
 	end)
+
+	surface.CreateFont("BeatrunHUDCourse", {
+		font = "Roboto",
+		extended = false,
+		size = ScreenScale(11),
+		weight = 500,
+		blursize = 0,
+		scanlines = 0,
+		antialias = true,
+		underline = false,
+		italic = false,
+		strikeout = false,
+		symbol = false,
+		rotary = false,
+		shadow = false,
+		additive = false,
+		outline = false,
+	})
+	surface.CreateFont("BeatrunHUDCourseItalic", {
+		font = "Roboto",
+		extended = false,
+		size = ScreenScale(11),
+		weight = 500,
+		blursize = 0,
+		scanlines = 0,
+		antialias = true,
+		underline = false,
+		italic = true,
+		strikeout = false,
+		symbol = false,
+		rotary = false,
+		shadow = false,
+		additive = false,
+		outline = false,
+	})
 end
 
 if SERVER then
@@ -173,7 +208,7 @@ local function StartCountdown()
 end
 local function StartCountdownHUD()
 	local text = countdowntext[countdown] or ""
-	surface.SetFont("DermaLarge")
+	surface.SetFont("BeatrunHUDCourseItalic")
 	surface.SetTextColor(255,255,255,countdownalpha)
 	local w, h = surface.GetTextSize(text)
 	surface.SetTextPos(ScrW() * 0.5 - (w * 0.5), ScrH() * 0.3)
@@ -191,7 +226,7 @@ function CourseHUD()
 	local vp = ply:GetViewPunchAngles()
 	local vpx, vpz = vp.x, vp.z
 	local incourse = Course_Name != ""
-	surface.SetFont("DermaLarge")
+	surface.SetFont("BeatrunHUDCourse")
 	surface.SetTextColor(255,255,255,255)
 	local totaltime = (CheckpointNumber != -1 and math.max(0, CurTime() - Course_StartTime)) or Course_EndTime
 	
@@ -203,14 +238,37 @@ function CourseHUD()
 	end
 	
 	if !BuildMode and hook.Run("BeatrunDrawHUD") != false and !ply.InReplay then
-		local speed = math.Round(ply:GetVelocity():Length()*0.06858125)
+		local speedorg = ply:GetVelocity():Length2D()
+		local speed = math.Round(speedorg * 0.06858125)
+
 		if speed < 10 then
 			speed = "0"..speed
 		end
+
 		text = speed.." km/h"
 		w, h = surface.GetTextSize(text)
-		surface.SetTextPos(ScrW() * 0.85 - (w * 0.5) + vpx, ScrH() * 0.85 + vpz)
+		surface.SetTextPos(ScrW() * 0.824 + vpx, ScrH() * 0.83 + vpz)
 		surface.DrawText(text)
+		-- surface.SetTextPos(ScrW() * 0.824 + vpx, ScrH() * 0.83 + vpz + h)
+		-- surface.DrawText(math.Round(speedorg).." u/s")
+
+		-- surface.SetTextPos(ScrW() * 0.824 + vpx, ScrH() * 0.83 + vpz - h * 5)
+		-- surface.DrawText(ply:GetWallrun() > 0 and math.Round(ply:GetWallrunTime() - CurTime(), 2) or "N/A")
+		-- surface.SetTextPos(ScrW() * 0.824 + vpx, ScrH() * 0.83 + vpz - h * 4)
+		-- surface.DrawText("(TBA)")
+		-- surface.SetTextPos(ScrW() * 0.824 + vpx, ScrH() * 0.83 + vpz - h * 3)
+		-- surface.DrawText(ply:GetWallrun())
+		-- surface.SetTextPos(ScrW() * 0.824 + vpx, ScrH() * 0.83 + vpz - h * 2)
+		-- surface.DrawText(math.abs(math.Round(ply:EyeAngles().yaw) % 90))
+
+		-- surface.SetTextPos(ScrW() * 0.864 + vpx, ScrH() * 0.83 + vpz - h * 5)
+		-- surface.DrawText("Wallrun Time")
+		-- surface.SetTextPos(ScrW() * 0.864 + vpx, ScrH() * 0.83 + vpz - h * 4)
+		-- surface.DrawText("Quakejump")
+		-- surface.SetTextPos(ScrW() * 0.864 + vpx, ScrH() * 0.83 + vpz - h * 3)
+		-- surface.DrawText("Wallrun")
+		-- surface.SetTextPos(ScrW() * 0.864 + vpx, ScrH() * 0.83 + vpz - h * 2)
+		-- surface.DrawText("Angle")
 	end
 	
 	if incourse and pbtimes then
@@ -234,7 +292,6 @@ function CourseHUD()
 
 		draw.DrawText(ply:GetNW2Int("CPNum") .. "/" .. #Checkpoints, "BeatrunHUD", pos.x, pos.y, color_white, TEXT_ALIGN_CENTER)
 	end
-
 end
 hook.Add("HUDPaint","CourseHUD",CourseHUD)
 
